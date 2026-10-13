@@ -1,0 +1,210 @@
+{
+ "forest": {
+  "page": "https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Rorup,_NSG_Roruper_Holz_--_2021_--_8187-91.jpg",
+  "author": "Dietmar Rabich",
+  "licence": "CC BY-SA 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ "birds": {
+  "001.Black_footed_Albatross": {
+   "image": "img/birds/black-footed-albatross.jpg",
+   "wikipedia": "Black-footed albatross",
+   "page": "https://commons.wikimedia.org/wiki/File:Black_footed_albatross1.jpg",
+   "author": "Original uploader was Jlfutari at en.wikipedia",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "002.Laysan_Albatross": {
+   "image": "img/birds/laysan-albatross.jpg",
+   "wikipedia": "Laysan albatross",
+   "page": "https://commons.wikimedia.org/wiki/File:Laysan_Albatross_RWD2.jpg",
+   "author": "DickDaniels (http://theworldbirds.org/)",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "004.Groove_billed_Ani": {
+   "image": "img/birds/groove-billed-ani.jpg",
+   "wikipedia": "Groove-billed ani",
+   "page": "https://commons.wikimedia.org/wiki/File:Groove-billed_ani_(Crotophaga_sulcirostris)_Cayo.jpg",
+   "author": "Charles J. Sharp",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "010.Red_winged_Blackbird": {
+   "image": "img/birds/red-winged-blackbird.jpg",
+   "wikipedia": "Red-winged blackbird",
+   "page": "https://commons.wikimedia.org/wiki/File:Red-Winged_Blackbird.png",
+   "author": "Chuck Homler, Focus On Wildlife",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "011.Rusty_Blackbird": {
+   "image": "img/birds/rusty-blackbird.jpg",
+   "wikipedia": "Rusty blackbird",
+   "page": "https://commons.wikimedia.org/wiki/File:Euphagus-carolinus-001.jpg",
+   "author": "No machine-readable author provided. Mdf assumed (based on copyright claims).",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "013.Bobolink": {
+   "image": "img/birds/bobolink.jpg",
+   "wikipedia": "Bobolink",
+   "page": "https://commons.wikimedia.org/wiki/File:20250702_adult_male_bobolink_glastonbury_meadows_squre_PD206841.jpg",
+   "author": "Paul Danese",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "014.Indigo_Bunting": {
+   "image": "img/birds/indigo-bunting.jpg",
+   "wikipedia": "Indigo bunting",
+   "page": "https://commons.wikimedia.org/wiki/File:Indigo_Bunting_by_Dan_Pancamo_4.jpg",
+   "author": "Dan Pancamo",
+   "licence": "CC BY-SA 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "021.Eastern_Towhee": {
+   "image": "img/birds/eastern-towhee.jpg",
+   "wikipedia": "Eastern towhee",
+   "page": "https://commons.wikimedia.org/wiki/File:20241004_eastern_towhee_pleasant_valley_PD207764.jpg",
+   "author": "Paul Danese",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "025.Pelagic_Cormorant": {
+   "image": "img/birds/pelagic-cormorant.jpg",
+   "wikipedia": "Pelagic cormorant",
+   "page": "https://commons.wikimedia.org/wiki/File:Pelagic_Cormorant_flying.jpg",
+   "author": "Mike Baird from Morro Bay, USA",
+   "licence": "CC BY 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "026.Bronzed_Cowbird": {
+   "image": "img/birds/bronzed-cowbird.jpg",
+   "wikipedia": "Bronzed cowbird",
+   "page": "https://commons.wikimedia.org/wiki/File:Bronzed_Cowbird.jpg",
+   "author": "Andy Reago & Chrissy McClarren",
+   "licence": "CC BY 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "027.Shiny_Cowbird": {
+   "image": "img/birds/shiny-cowbird.jpg",
+   "wikipedia": "Shiny cowbird",
+   "page": "https://commons.wikimedia.org/wiki/File:Shiny_cowbird_(Molothrus_bonariensis)_male.JPG",
+   "author": "Charles J. Sharp",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "029.American_Crow": {
+   "image": "img/birds/american-crow.jpg",
+   "wikipedia": "American crow",
+   "page": "https://commons.wikimedia.org/wiki/File:Corvus-brachyrhynchos-001.jpg",
+   "author": "",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "030.Fish_Crow": {
+   "image": "img/birds/fish-crow.jpg",
+   "wikipedia": "Fish crow",
+   "page": "https://commons.wikimedia.org/wiki/File:Fish_crow_in_Red_Hook_(42712).jpg",
+   "author": "Rhododendrites",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "031.Black_billed_Cuckoo": {
+   "image": "img/birds/black-billed-cuckoo.jpg",
+   "wikipedia": "Yellow-billed cuckoo",
+   "page": "https://commons.wikimedia.org/wiki/File:Yellow-billed_cuckoo_(42690).jpg",
+   "author": "Rhododendrites",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "035.Purple_Finch": {
+   "image": "img/birds/purple-finch.jpg",
+   "wikipedia": "Purple finch",
+   "page": "https://commons.wikimedia.org/wiki/File:Carpodacus_purpureus_CT3.jpg",
+   "author": "Cephas",
+   "licence": "CC BY-SA 3.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "036.Northern_Flicker": {
+   "image": "img/birds/northern-flicker.jpg",
+   "wikipedia": "Northern flicker",
+   "page": "https://commons.wikimedia.org/wiki/File:Northern_yellow-shafted_flicker_male_(33737)_(cropped).jpg",
+   "author": "Rhododendrites",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "038.Great_Crested_Flycatcher": {
+   "image": "img/birds/great-crested-flycatcher.jpg",
+   "wikipedia": "Great crested flycatcher",
+   "page": "https://commons.wikimedia.org/wiki/File:GreatCrestedFlycatcher.jpg",
+   "author": "Polinova",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "040.Olive_sided_Flycatcher": {
+   "image": "img/birds/olive-sided-flycatcher.jpg",
+   "wikipedia": "Olive-sided flycatcher",
+   "page": "https://commons.wikimedia.org/wiki/File:Olive-sided_Flycatcher.jpg",
+   "author": "Dominic Sherony",
+   "licence": "CC BY-SA 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "041.Scissor_tailed_Flycatcher": {
+   "image": "img/birds/scissor-tailed-flycatcher.jpg",
+   "wikipedia": "Scissor-tailed flycatcher",
+   "page": "https://commons.wikimedia.org/wiki/File:Tyrannus_forficatus_on_branch.jpg",
+   "author": "Kramer, Gary",
+   "licence": "Public domain",
+   "licence_url": ""
+  },
+  "042.Vermilion_Flycatcher": {
+   "image": "img/birds/vermilion-flycatcher.jpg",
+   "wikipedia": "Vermilion flycatcher",
+   "page": "https://commons.wikimedia.org/wiki/File:Karmintyrann_(Pyrocephalus_obscurus),_M%C3%A4nnchen_1.jpg",
+   "author": "Henry",
+   "licence": "CC BY 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "044.Frigatebird": {
+   "image": "img/birds/frigatebird.jpg",
+   "wikipedia": "Magnificent frigatebird",
+   "page": "https://commons.wikimedia.org/wiki/File:Fregata_magnificens_-Galapagos,_Ecuador_-male-8_(1).jpg",
+   "author": "Andrew Turner from Washington, DC, United States",
+   "licence": "CC BY 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "045.Northern_Fulmar": {
+   "image": "img/birds/northern-fulmar.jpg",
+   "wikipedia": "Northern fulmar",
+   "page": "https://commons.wikimedia.org/wiki/File:Fulmar_(Fulmarus_glacialis)_in_flight_Moher.jpg",
+   "author": "Charles J. Sharp",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "046.Gadwall": {
+   "image": "img/birds/gadwall.jpg",
+   "wikipedia": "Gadwall",
+   "page": "https://commons.wikimedia.org/wiki/File:Gadwall-Anas-strepera.jpg",
+   "author": "Andreas Trepte",
+   "licence": "CC BY-SA 2.5",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/2.5"
+  },
+  "047.American_Goldfinch": {
+   "image": "img/birds/american-goldfinch.jpg",
+   "wikipedia": "American goldfinch",
+   "page": "https://commons.wikimedia.org/wiki/File:Carduelis_tristis_-Michigan,_USA_-male-8.jpg",
+   "author": "Rodney Campbell",
+   "licence": "CC BY 2.0",
+   "licence_url": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "048.European_Goldfinch": {
+   "image": "img/birds/european-goldfinch.jpg",
+   "wikipedia": "European goldfinch",
+   "page": "https://commons.wikimedia.org/wiki/File:072_Wild_European_goldfinch_at_the_Parc_Jura_vaudois_Photo_by_Giles_Laurent.jpg",
+   "author": "Giles Laurent",
+   "licence": "CC BY-SA 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by-sa/4.0"
+  }
+ }
+}

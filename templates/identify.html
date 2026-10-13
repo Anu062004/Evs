@@ -1,37 +1,42 @@
 {% extends "base.html" %}
+{% from "_macros.html" import arrow, missing_model %}
 {% block title %}Identify{% endblock %}
 {% block content %}
-<h1>Identify a bird</h1>
-
-{% if not model_ready %}
-<p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
-{% else %}
-<form class="upload" method="post" enctype="multipart/form-data">
-  <label for="photo">Bird photo (JPG or PNG, up to 10 MB)</label>
-  <input id="photo" type="file" name="photo" accept="image/*" required>
-  <button class="button primary" type="submit">Identify</button>
-</form>
-{% endif %}
-
-{% if error %}<p class="notice error">{{ error }}</p>{% endif %}
-
-{% if predictions %}
-<section class="result">
-  <img src="data:image/jpeg;base64,{{ preview }}" alt="Uploaded photo: {{ filename }}">
-  <div>
-    <h2>Top {{ predictions|length }} species</h2>
-    <ol class="predictions">
-      {% for p in predictions %}
-      <li>
-        <span class="species">{{ p.species }}</span>
-        <span class="confidence">{{ '%.1f'|format(p.confidence * 100) }}%</span>
-        <span class="bar"><span style="width: {{ '%.1f'|format(p.confidence * 100) }}%"></span></span>
-      </li>
-      {% endfor %}
-    </ol>
-    <p class="hint">The model only knows the species on the <a href="{{ url_for('species') }}">species list</a>, so any other bird is still given one of those names.</p>
-    <a class="button" href="{{ url_for('identify') }}">Try another photo</a>
+<div class="fp-page">
+  <div class="fp-panel">
+    <p class="fp-label">Identify</p>
+    <h1 class="fp-h2">Identify a bird</h1>
+    {% if not model_ready %}
+    {{ missing_model() }}
+    {% else %}
+    <form class="fp-upload" method="post" enctype="multipart/form-data">
+      <label for="photo">Bird photo (JPG or PNG, up to 10 MB)</label>
+      <input id="photo" type="file" name="photo" accept="image/*" required>
+      <button class="btn btn-primary" type="submit">Identify {{ arrow() }}</button>
+    </form>
+    {% endif %}
+    {% if error %}<p class="fp-notice error" style="margin-top: 16px">{{ error }}</p>{% endif %}
   </div>
-</section>
-{% endif %}
+
+  {% if predictions %}
+  <div class="fp-panel fp-result">
+    <img src="data:image/jpeg;base64,{{ preview }}" alt="Uploaded photo: {{ filename }}">
+    <div>
+      <p class="fp-label">Top {{ predictions|length }} species</p>
+      <ol class="fp-preds">
+        {% for p in predictions %}
+        <li>
+          {% if p.image %}<img src="{{ url_for('static', filename=p.image) }}" alt="Reference photo of {{ p.name }}">{% else %}<span></span>{% endif %}
+          <span class="name">{{ p.name }}</span>
+          <span class="conf">{{ '%.1f'|format(p.confidence * 100) }}%</span>
+          <span class="fp-bar"><span style="width: {{ '%.1f'|format(p.confidence * 100) }}%"></span></span>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="fp-caption">The small photos are reference pictures of each species. The model only knows the species on the <a href="{{ url_for('species') }}">species list</a>, so any other bird is still given one of those names.</p>
+      <div class="fp-actions"><a class="btn btn-secondary glass-edge" href="{{ url_for('identify') }}">Try another photo</a></div>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

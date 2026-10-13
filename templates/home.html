@@ -1,24 +1,95 @@
 {% extends "base.html" %}
+{% from "_macros.html" import arrow, photo %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<section class="hero">
-  <h1>Identify a bird from a photo</h1>
-  <p>Upload a field photograph and get the three most likely species with a confidence score for each.</p>
-  <div class="actions">
-    <a class="button primary" href="{{ url_for('identify') }}">Identify a bird</a>
-    <a class="button" href="{{ url_for('species') }}">Browse species</a>
+<section id="s-0" class="fp-sec fp-hero">
+  <div class="fp-wrap">
+    <div class="fp-panel">
+      <p class="fp-label">Bird species recognition</p>
+      <h1 class="fp-display">Name the bird,<br>from one photo</h1>
+      <p class="fp-body" style="font-size: 18px; max-width: 34em">Upload a field photograph and get the three most likely species, each with a confidence score.</p>
+      <div class="fp-actions">
+        <a class="btn btn-primary" href="{{ url_for('identify') }}">Identify a bird {{ arrow() }}</a>
+        <a class="btn btn-secondary glass-edge" href="{{ url_for('species') }}">Browse species</a>
+      </div>
+      <a class="fp-scroll" href="#s-1"><span class="fp-scroll-line" aria-hidden="true"></span>Scroll</a>
+    </div>
+    <div class="fp-birds">{% for sp in birds[0:2] %}{{ photo(sp) }}{% endfor %}</div>
   </div>
-  {% if not model_ready %}
-  <p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
-  {% endif %}
 </section>
 
-<section class="cards">
-  {% for endpoint, label, status in sitemap if endpoint != 'home' %}
-  <a class="card" href="{{ url_for(endpoint) }}">
-    <h2>{{ label }}</h2>
-    {% if status == 'planned' %}<span class="badge">Planned</span>{% endif %}
-  </a>
-  {% endfor %}
+<section id="s-1" class="fp-sec">
+  <div class="fp-wrap is-right">
+    <div class="fp-panel">
+      <p class="fp-label">The model · 02</p>
+      <h2 class="fp-h2">A ResNet-50 baseline</h2>
+      {% if metrics %}
+      <p class="fp-sub">{{ '%.1f'|format(metrics.test_top1 * 100) }}% Top-1 accuracy on photos it never saw.</p>
+      <p class="fp-body">Fine-tuned on {{ metrics.classes }} species and tested on {{ metrics.test_images }} held-out photos. Top-5 accuracy is {{ '%.1f'|format(metrics.test_top5 * 100) }}% and macro-F1 is {{ '%.3f'|format(metrics.test_macro_f1) }}.</p>
+      {% else %}
+      <p class="fp-body">A network pretrained on ImageNet, fine-tuned on bird photographs.</p>
+      {% endif %}
+      <div class="fp-chips">
+        <span class="fp-chip green">Identify · live</span>
+        <span class="fp-chip blue">{{ species_count }} species</span>
+        <span class="fp-chip amber">Biodiversity · planned</span>
+      </div>
+      <a class="fp-ghost" href="{{ url_for('performance') }}"><span>See model performance</span></a>
+    </div>
+    <div class="fp-birds">{% for sp in birds[2:3] %}{{ photo(sp) }}{% endfor %}</div>
+  </div>
+</section>
+
+<section id="s-2" class="fp-sec">
+  <div class="fp-wrap">
+    <div class="fp-panel">
+      <p class="fp-label">How it works · 03</p>
+      <h2 class="fp-h2">From photo to species</h2>
+      <p class="fp-body">Every photo goes through the same four steps.</p>
+      <div class="fp-flow">
+        <div class="fp-step"><b>01</b><span>Upload a photo</span></div>
+        {{ arrow(18)|replace('ico-arrow', 'fp-arrow') }}
+        <div class="fp-step"><b>02</b><span>Resize to 224 px</span></div>
+        {{ arrow(18)|replace('ico-arrow', 'fp-arrow') }}
+        <div class="fp-step"><b>03</b><span>ResNet-50 scores it</span></div>
+        {{ arrow(18)|replace('ico-arrow', 'fp-arrow') }}
+        <div class="fp-step"><b>04</b><span>Top 3 species</span></div>
+      </div>
+    </div>
+    <div class="fp-birds">{% for sp in birds[3:6] %}{{ photo(sp) }}{% endfor %}</div>
+  </div>
+</section>
+
+<section id="s-3" class="fp-sec fp-cards-sec">
+  <div class="fp-wrap">
+    <div class="fp-panel fp-cards-head">
+      <p class="fp-label">Explore · 04</p>
+      <h2 class="fp-h2">Everything on the site</h2>
+      <p class="fp-body" style="margin: 0">Five pages, one job each.</p>
+    </div>
+    <div class="fp-cards">
+      <article class="fp-card"><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"></path></svg><h3 class="fp-h3">Identify</h3><p class="fp-body">Upload a photo and get the top three species.</p><a class="fp-ghost" href="{{ url_for('identify') }}"><span>Identify a bird</span></a></article>
+      <article class="fp-card"><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-14 14-14 0 9-6 14-14 14Z"></path><path d="M5 19 14 10"></path></svg><h3 class="fp-h3">Species</h3><p class="fp-body">Photos of the {{ species_count }} species the model knows.</p><a class="fp-ghost" href="{{ url_for('species') }}"><span>Browse species</span></a></article>
+      <article class="fp-card"><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"></path><path d="m7 20 5-12 5 12"></path><path d="M9.5 14h5"></path></svg><h3 class="fp-h3">Performance</h3><p class="fp-body">Accuracy, training curves and the confusion matrix.</p><a class="fp-ghost" href="{{ url_for('performance') }}"><span>See the results</span></a></article>
+      <article class="fp-card"><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"></path></svg><h3 class="fp-h3">Biodiversity <span class="fp-chip amber">Planned</span></h3><p class="fp-body">Diversity measures for a survey site. Not built yet.</p><a class="fp-ghost" href="{{ url_for('biodiversity') }}"><span>What is planned</span></a></article>
+      <article class="fp-card"><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><h3 class="fp-h3">About</h3><p class="fp-body">The project, the team and the photo credits.</p><a class="fp-ghost" href="{{ url_for('about') }}"><span>About the project</span></a></article>
+    </div>
+  </div>
+</section>
+
+<section id="s-4" class="fp-sec">
+  <div class="fp-wrap is-right">
+    <div class="fp-panel">
+      <p class="fp-label">Try it · 05</p>
+      <h2 class="fp-h2">Have a bird photo?</h2>
+      <p class="fp-body">Upload it and see which species the model picks.</p>
+      <div class="fp-actions">
+        <a class="btn btn-primary" href="{{ url_for('identify') }}">Identify a bird {{ arrow() }}</a>
+        <a class="btn btn-secondary glass-edge" href="{{ url_for('species') }}">Browse species</a>
+      </div>
+      <p class="fp-caption" style="margin-top: 16px">The model only knows {{ species_count }} species, so any other bird is still given one of those names.</p>
+    </div>
+    <div class="fp-birds">{% for sp in birds[6:8] %}{{ photo(sp) }}{% endfor %}</div>
+  </div>
 </section>
 {% endblock %}

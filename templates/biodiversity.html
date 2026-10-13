@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Biodiversity{% endblock %}
 {% block content %}
-<h1>Biodiversity <span class="badge">Planned</span></h1>
-<p>This page will turn a set of identified photos into biodiversity measures for a site. It is not built yet.</p>
-<ul>
-  <li>Species richness, Shannon index and Simpson index for a survey</li>
-  <li>Several birds detected in one photo</li>
-  <li>Unknown species flagged instead of forced into a known name</li>
-  <li>Grad-CAM view of what the model looked at</li>
-</ul>
-<a class="button" href="{{ url_for('identify') }}">Identify a bird</a>
+<div class="fp-page">
+  <div class="fp-panel">
+    <p class="fp-label">Biodiversity</p>
+    <h1 class="fp-h2">Biodiversity <span class="fp-chip amber">Planned</span></h1>
+    <p class="fp-body">This page will turn a set of identified photos into biodiversity measures for a site. It is not built yet.</p>
+    <ul class="fp-list">
+      <li>Species richness, Shannon index and Simpson index for a survey</li>
+      <li>Several birds detected in one photo</li>
+      <li>Unknown species flagged instead of forced into a known name</li>
+      <li>Grad-CAM view of what the model looked at</li>
+    </ul>
+    <a class="btn btn-secondary glass-edge" href="{{ url_for('identify') }}">Identify a bird</a>
+  </div>
+</div>
 {% endblock %}

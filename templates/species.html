@@ -1,14 +1,22 @@
 {% extends "base.html" %}
+{% from "_macros.html" import arrow, photo, missing_model %}
 {% block title %}Species{% endblock %}
 {% block content %}
-<h1>Species the model knows</h1>
-{% if species %}
-<p>{{ species|length }} species.</p>
-<ul class="species-list">
-  {% for name in species %}<li>{{ name }}</li>{% endfor %}
-</ul>
-<a class="button primary" href="{{ url_for('identify') }}">Identify a bird</a>
-{% else %}
-<p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
-{% endif %}
+<div class="fp-page">
+  <div class="fp-panel">
+    <p class="fp-label">Species</p>
+    <h1 class="fp-h2">Species the model knows</h1>
+    {% if species %}
+    <p class="fp-body">{{ species|length }} species. Any other bird is still given one of these names.</p>
+    <a class="btn btn-primary" href="{{ url_for('identify') }}">Identify a bird {{ arrow() }}</a>
+    {% else %}
+    {{ missing_model() }}
+    {% endif %}
+  </div>
+  <div class="fp-gallery">
+    {% for sp in species %}
+    {% if sp.image %}{{ photo(sp) }}{% else %}<div class="fp-card"><h3 class="fp-h3">{{ sp.name }}</h3></div>{% endif %}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

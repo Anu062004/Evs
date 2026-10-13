@@ -1,0 +1,11 @@
+{% macro arrow(size=16) %}<svg class="ico-arrow" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>{% endmacro %}
+
+{% macro photo(sp) %}
+<figure class="fp-photo">
+  <img src="{{ url_for('static', filename=sp.image) }}" alt="{{ sp.name }}" loading="lazy">
+  <figcaption>{{ sp.name }}</figcaption>
+  <span class="fp-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+</figure>
+{% endmacro %}
+
+{% macro missing_model() %}<p class="fp-notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>{% endmacro %}

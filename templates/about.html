@@ -1,18 +1,33 @@
 {% extends "base.html" %}
 {% block title %}About{% endblock %}
 {% block content %}
-<h1>About the project</h1>
-<p>Deep Learning-Based Bird Species Recognition, an Environmental Science Project (BAIP508) in the Department of Artificial Intelligence and Machine Learning.</p>
+<div class="fp-page">
+  <div class="fp-panel">
+    <p class="fp-label">About</p>
+    <h1 class="fp-h2">About the project</h1>
+    <p class="fp-body">Deep Learning-Based Bird Species Recognition, an Environmental Science Project (BAIP508) in the Department of Artificial Intelligence and Machine Learning.</p>
+    <h2 class="fp-h3">Team</h2>
+    <ul class="fp-list">
+      <li>Sonali N Gowda</li>
+      <li>Anubhav</li>
+      <li>Reyyi Shreyas</li>
+      <li>Mayank Prakash</li>
+    </ul>
+    <p class="fp-body">Guided by Prof. Shobith Tembhre.</p>
+    <h2 class="fp-h3">How it works</h2>
+    <p class="fp-body">A ResNet-50 network pretrained on ImageNet is fine-tuned on bird photographs resized to 224 × 224. See <a href="{{ url_for('performance') }}">model performance</a> for the measured results.</p>
+  </div>
 
-<h2>Team</h2>
-<ul>
-  <li>Sonali N Gowda</li>
-  <li>Anubhav</li>
-  <li>Reyyi Shreyas</li>
-  <li>Mayank Prakash</li>
-</ul>
-<p>Guided by Prof. Shobith Tembhre.</p>
-
-<h2>How it works</h2>
-<p>A ResNet-50 network pretrained on ImageNet is fine-tuned on bird photographs resized to 224 × 224. See <a href="{{ url_for('performance') }}">model performance</a> for the measured results.</p>
+  <div class="fp-panel" id="credits">
+    <p class="fp-label">Photo credits</p>
+    <h2 class="fp-h3">Photographs used on this site</h2>
+    <p class="fp-body">All photographs come from Wikimedia Commons and are used under the licences shown. They illustrate the species and were not used to train the model.</p>
+    <ul class="fp-credits">
+      {% if forest %}<li>Forest background: <a href="{{ forest.page }}">{{ forest.author or 'Wikimedia Commons' }}</a>, {% if forest.licence_url %}<a href="{{ forest.licence_url }}">{{ forest.licence }}</a>{% else %}{{ forest.licence }}{% endif %}</li>{% endif %}
+      {% for sp in species if sp.image %}
+      <li>{{ sp.name }}: <a href="{{ sp.page }}">{{ sp.author or 'Wikimedia Commons' }}</a>, {% if sp.licence_url %}<a href="{{ sp.licence_url }}">{{ sp.licence }}</a>{% else %}{{ sp.licence }}{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock %}
