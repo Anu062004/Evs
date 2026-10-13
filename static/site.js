@@ -1,4 +1,4 @@
-// Menu drawer and ambient forest sound.
+// Menu drawer, ambient forest sound and scroll effects.
 (function () {
   const menuBtn = document.querySelector('.fp-menu-btn');
   const drawer = document.getElementById('fp-drawer');
@@ -62,5 +62,42 @@
       soundBtn.setAttribute('aria-pressed', String(on));
       soundBtn.setAttribute('aria-label', on ? 'Turn ambient sound off' : 'Turn ambient sound on');
     });
+  }
+
+  // Scroll effects. Panels, photo groups and cards rise in as they enter the view;
+  // the forest photo slowly zooms and drifts, and a thin bar shows how far down the page you are.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll('.fp-sec .fp-panel, .fp-sec .fp-birds, .fp-card, .fp-page > .fp-panel, .fp-gallery .fp-photo, .fp-page > .fp-figure');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const seen = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        seen.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    targets.forEach((el) => {
+      // stagger siblings (cards in a row, photos in a gallery) so they arrive one after another
+      const index = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.style.setProperty('--reveal-delay', (el.matches('.fp-card, .fp-gallery .fp-photo') ? (index % 4) * 0.08 : 0) + 's');
+      el.classList.add('fp-reveal');
+      seen.observe(el);
+    });
+  }
+
+  const bg = document.querySelector('.fp-bg');
+  const bar = document.querySelector('.fp-progress');
+  if (!reduce && bg) {
+    let queued = false;
+    const paint = () => {
+      queued = false;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      bg.style.transform = 'scale(' + (1 + 0.16 * p) + ') translateY(' + (-2.5 * p) + '%)';
+      if (bar) bar.style.transform = 'scaleX(' + p + ')';
+    };
+    window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(paint); } }, { passive: true });
+    window.addEventListener('resize', paint);
+    paint();
   }
 })();

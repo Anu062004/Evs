@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Documentation{% endblock %}
+{% block content %}
+<div class="fp-page fp-docs">
+  <div class="fp-panel">
+    <p class="fp-label">Documentation</p>
+    <h1 class="fp-h2">How the project works</h1>
+    <p class="fp-body">What the system does, how to use it, how the model was trained and tested, and where its limits are.</p>
+    <nav class="fp-toc" aria-label="On this page">
+      <a class="fp-ghost" href="#overview"><span>Overview</span></a>
+      <a class="fp-ghost" href="#using"><span>Using the site</span></a>
+      <a class="fp-ghost" href="#data"><span>Data</span></a>
+      <a class="fp-ghost" href="#training"><span>Training</span></a>
+      <a class="fp-ghost" href="#results"><span>Results</span></a>
+      <a class="fp-ghost" href="#backend"><span>Backend</span></a>
+      <a class="fp-ghost" href="#limits"><span>Limitations</span></a>
+      <a class="fp-ghost" href="#run"><span>Run it yourself</span></a>
+    </nav>
+  </div>
+
+  <section class="fp-panel" id="overview">
+    <p class="fp-label">01 · Overview</p>
+    <h2 class="fp-h3">What it is</h2>
+    <p class="fp-body">A bird photograph goes in, and the three most likely species come out, each with a confidence score. The project has two parts.</p>
+    <ul class="fp-list">
+      <li><strong>Training pipeline.</strong> Python scripts that check the dataset, split it, fine-tune a ResNet-50 network and measure it on held-out photos.</li>
+      <li><strong>Website.</strong> A Flask application that loads the trained model and identifies uploaded photos.</li>
+    </ul>
+    <p class="fp-body">This is the Phase 1 baseline. Detecting several birds in one photo, rejecting unknown species, Grad-CAM explanations and biodiversity indices are planned for Phase 2 and are not built.</p>
+  </section>
+
+  <section class="fp-panel" id="using">
+    <p class="fp-label">02 · Using the site</p>
+    <h2 class="fp-h3">Identify a bird</h2>
+    <ol class="fp-list">
+      <li>Open <a href="{{ url_for('identify') }}">Identify</a> and choose a JPG or PNG photo up to 10 MB.</li>
+      <li>Press Identify.</li>
+      <li>Read the three species and their confidence. The small photos are reference pictures of each species, so you can compare by eye.</li>
+    </ol>
+    <p class="fp-body">Photos where the bird is large, sharp and unobstructed work best. Check the <a href="{{ url_for('species') }}">species list</a> first: the model can only answer with one of those {{ species_count }} species.</p>
+    <div class="fp-table"><table>
+      <thead><tr><th>Page</th><th>Address</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Home</td><td><code>/</code></td><td>Introduction and links</td></tr>
+        <tr><td>Identify</td><td><code>/identify</code></td><td>Upload a photo, get the top three species</td></tr>
+        <tr><td>Species</td><td><code>/species</code></td><td>Photos of every species the model knows</td></tr>
+        <tr><td>Performance</td><td><code>/performance</code></td><td>Test accuracy, training curves, confusion matrix</td></tr>
+        <tr><td>Biodiversity</td><td><code>/biodiversity</code></td><td>Planned Phase 2 features</td></tr>
+        <tr><td>About</td><td><code>/about</code></td><td>Team and photo credits</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="fp-panel" id="data">
+    <p class="fp-label">03 · Data</p>
+    <h2 class="fp-h3">Dataset and quality checks</h2>
+    <p class="fp-body">The model was trained on 25 species from CUB-200-2011 (Caltech-UCSD Birds), 60 photographs per species. These are North American species; an Indian bird dataset can be run through the same scripts.</p>
+    <p class="fp-body"><code>prepare_data.py</code> does the following before any training:</p>
+    <ul class="fp-list">
+      <li>Opens every file and rejects the ones that are corrupt.</li>
+      <li>Removes exact duplicate files.</li>
+      <li>Groups near-duplicate photos, such as resized copies, so a group never straddles two splits. This stops the model being tested on a photo it has effectively already seen.</li>
+      <li>Splits each species 70:15:15 into training, validation and test sets.</li>
+      <li>Writes the split manifest, a per-species count table and a log of rejected files.</li>
+    </ul>
+    <p class="fp-body">The result was 1,050 training, 225 validation and 225 test photos. The dataset has no photographer or session information, so grouping by photographer was not possible; only near-duplicates are controlled.</p>
+  </section>
+
+  <section class="fp-panel" id="training">
+    <p class="fp-label">04 · Training</p>
+    <h2 class="fp-h3">How the model was trained</h2>
+    <div class="fp-table"><table>
+      <tbody>
+        <tr><th>Network</th><td>ResNet-50 pretrained on ImageNet, final layer replaced with a 25-species layer</td></tr>
+        <tr><th>Input</th><td>224 × 224 pixels, normalised with the ImageNet mean and standard deviation</td></tr>
+        <tr><th>Augmentation</th><td>Random crop, horizontal flip and colour jitter, on the training split only</td></tr>
+        <tr><th>Schedule</th><td>15 epochs; the first 2 train only the new layer, the rest train the whole network</td></tr>
+        <tr><th>Optimiser</th><td>AdamW with cosine learning-rate decay; cross-entropy loss with label smoothing 0.1</td></tr>
+        <tr><th>Model selection</th><td>The epoch with the best validation macro-F1 is kept</td></tr>
+      </tbody>
+    </table></div>
+    <p class="fp-body">The test split is used once, after training, on the selected weights. It plays no part in choosing them.</p>
+  </section>
+
+  <section class="fp-panel" id="results">
+    <p class="fp-label">05 · Results</p>
+    <h2 class="fp-h3">What was measured</h2>
+    {% if metrics %}
+    <div class="fp-table"><table>
+      <thead><tr><th>Metric</th><th>Result</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Top-1 accuracy</td><td>{{ '%.1f'|format(metrics.test_top1 * 100) }}%</td><td>The first answer is the right species</td></tr>
+        <tr><td>Top-5 accuracy</td><td>{{ '%.1f'|format(metrics.test_top5 * 100) }}%</td><td>The right species is among the first five answers</td></tr>
+        <tr><td>Macro-F1</td><td>{{ '%.3f'|format(metrics.test_macro_f1) }}</td><td>Average of each species' own score, so every species counts equally</td></tr>
+      </tbody>
+    </table></div>
+    <p class="fp-body">Measured on {{ metrics.test_images }} test photos across {{ metrics.classes }} species. Most errors are between the all-black birds: Fish Crow, American Crow and Shiny Cowbird.</p>
+    {% else %}
+    <p class="fp-body">No evaluation results are available yet.</p>
+    {% endif %}
+    <a class="fp-ghost" href="{{ url_for('performance') }}"><span>See the curves and confusion matrix</span></a>
+  </section>
+
+  <section class="fp-panel" id="backend">
+    <p class="fp-label">06 · Backend</p>
+    <h2 class="fp-h3">What happens when you upload a photo</h2>
+    <ol class="fp-list">
+      <li>The browser sends the file to <code>/identify</code>. Files over 10 MB, or files that are not images, are refused with a message.</li>
+      <li>The photo is resized to 256 pixels on its short side, centre-cropped to 224 × 224 and normalised, the same steps used on validation photos during training.</li>
+      <li>ONNX Runtime runs the network on the server's CPU and returns one score per species.</li>
+      <li>Softmax converts the scores to percentages that add up to 100.</li>
+      <li>The three highest are shown with their reference photos.</li>
+    </ol>
+    <p class="fp-body">The model is trained in PyTorch and exported to ONNX, a portable format, so the website does not need PyTorch installed. Uploaded photos are processed in memory and are not saved. There is no database.</p>
+  </section>
+
+  <section class="fp-panel" id="limits">
+    <p class="fp-label">07 · Limitations</p>
+    <h2 class="fp-h3">What to keep in mind</h2>
+    <ul class="fp-list">
+      <li><strong>Closed set.</strong> A bird outside the {{ species_count }} species, or a photo with no bird at all, is still given one of those names.</li>
+      <li><strong>Confidence is not certainty.</strong> A high percentage means the model prefers that species over the others it knows, not that the answer is verified.</li>
+      <li><strong>One bird per photo.</strong> The whole image gets a single label.</li>
+      <li><strong>Small test set.</strong> There are 9 test photos per species, so a single species' score shifts a lot with one mistake.</li>
+      <li><strong>Curated photos.</strong> The dataset is mostly clear, well-framed pictures. Distant, dark or partly hidden birds will do worse.</li>
+    </ul>
+  </section>
+
+  <section class="fp-panel" id="run">
+    <p class="fp-label">08 · Run it yourself</p>
+    <h2 class="fp-h3">Website</h2>
+<pre><code>pip install -r requirements.txt
+python app.py</code></pre>
+    <p class="fp-body">Then open <code>http://127.0.0.1:5000</code>.</p>
+    <h2 class="fp-h3">Retrain the model</h2>
+    <p class="fp-body">Put the photos in <code>data/raw</code>, one folder per species, then:</p>
+<pre><code>pip install -r requirements-train.txt
+python prepare_data.py --data-dir data/raw --max-classes 25
+python train.py --manifest data/manifest/manifest.csv --data-dir data/raw
+python export_onnx.py --weights runs/resnet50/best.pt</code></pre>
+    <p class="fp-body">The source code is on <a href="https://github.com/Anu062004/Evs">GitHub</a>.</p>
+  </section>
+</div>
+{% endblock %}

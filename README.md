@@ -18,6 +18,7 @@ Team: Sonali N Gowda, Anubhav, Reyyi Shreyas, Mayank Prakash. Guide: Prof. Shobi
 | Species | Photos of the 25 species the model knows |
 | Performance | Test accuracy, training curves and confusion matrix |
 | Biodiversity | Planned for Phase 2, not built yet |
+| Docs | How the project works, in full |
 | About | Team and photo credits |
 
 ## Results

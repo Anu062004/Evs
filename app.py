@@ -41,6 +41,7 @@ SITEMAP = [
     ("species", "Species", "live"),
     ("performance", "Performance", "live"),
     ("biodiversity", "Biodiversity", "planned"),
+    ("docs", "Docs", "live"),
     ("about", "About", "live"),
 ]
 
@@ -150,6 +151,11 @@ def run_file(name):
 @app.route("/biodiversity")
 def biodiversity():
     return render_template("biodiversity.html")
+
+
+@app.route("/docs")
+def docs():
+    return render_template("docs.html", metrics=load_metrics(), species_count=len(all_species()))
 
 
 @app.route("/about")
