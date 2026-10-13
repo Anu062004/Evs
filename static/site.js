@@ -1,4 +1,4 @@
-// Menu drawer, ambient forest sound and the cursor ring.
+// Menu drawer and ambient forest sound.
 (function () {
   const menuBtn = document.querySelector('.fp-menu-btn');
   const drawer = document.getElementById('fp-drawer');
@@ -62,16 +62,5 @@
       soundBtn.setAttribute('aria-pressed', String(on));
       soundBtn.setAttribute('aria-label', on ? 'Turn ambient sound off' : 'Turn ambient sound on');
     });
-  }
-
-  // Cursor ring that grows over links, buttons and bird photos.
-  const cursor = document.querySelector('.fp-cursor');
-  if (cursor && window.matchMedia('(pointer: fine)').matches) {
-    window.addEventListener('pointermove', (e) => {
-      cursor.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
-      cursor.classList.add('is-on');
-      cursor.classList.toggle('is-hot', !!(e.target.closest && e.target.closest('a,button,input,.fp-photo')));
-    }, { passive: true });
-    document.addEventListener('pointerout', (e) => { if (!e.relatedTarget) cursor.classList.remove('is-on'); });
   }
 })();

@@ -193,12 +193,6 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline:3px solid v
 .fp-foot { position:relative; z-index:2; margin:0 16px 16px; padding:12px 24px; border-radius:20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 24px; background:var(--surface); border:1px solid var(--edge); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); }
 .fp-foot nav { display:flex; flex-wrap:wrap; gap:4px 20px; }
 
-/* ---------- Cursor ring (mouse only) ---------- */
-.fp-cursor { position:fixed; left:0; top:0; width:28px; height:28px; margin:-14px 0 0 -14px; border-radius:50%; border:1.5px solid rgba(255,255,255,.92); box-shadow:0 0 0 1px rgba(15,36,24,.25); pointer-events:none; z-index:40; opacity:0; transition:width .2s,height .2s,margin .2s,opacity .2s,background-color .2s; }
-.fp-cursor.is-on { opacity:1; }
-.fp-cursor.is-hot { width:46px; height:46px; margin:-23px 0 0 -23px; background:rgba(255,255,255,.14); }
-@media (pointer:coarse) { .fp-cursor { display:none; } }
-
 /* ---------- Phones: photos sit above the text panel ---------- */
 @media (max-width:860px) {
   .fp-wrap, .fp-hero .fp-wrap, .fp-wrap.is-right { grid-template-columns:minmax(0,1fr); gap:28px; }
@@ -214,5 +208,5 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline:3px solid v
 }
 @media (prefers-reduced-motion:reduce) {
   .fp-eq i, .fp-scroll-line::after { animation:none; }
-  .btn, .fp-icon-btn, .fp-ghost span, .fp-cursor { transition:none; }
+  .btn, .fp-icon-btn, .fp-ghost span { transition:none; }
 }
