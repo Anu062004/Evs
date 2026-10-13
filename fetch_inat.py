@@ -25,14 +25,21 @@ HEADERS = {"User-Agent": "EvsBirdProject/1.0 (student project; github.com/Anu062
 LICENCES = "cc0,cc-by,cc-by-nc"
 MAX_PER_OBSERVER = 3  # keeps one prolific photographer from dominating a species
 
-SPECIES = [
-    "Indian Peafowl", "House Crow", "Common Myna", "Rose-ringed Parakeet", "Indian Roller",
-    "White-throated Kingfisher", "Red-vented Bulbul", "Asian Koel", "Oriental Magpie-Robin",
-    "Black Drongo", "Indian Pond Heron", "Purple Sunbird", "Asian Green Bee-eater",
-    "Coppersmith Barbet", "Indian Robin", "Jungle Babbler", "Red-wattled Lapwing", "Brahminy Kite",
-    "Eurasian Hoopoe", "House Sparrow", "Greater Coucal", "Rufous Treepie", "Shikra", "Black Kite",
-    "Laughing Dove",
-]
+# Common name -> scientific name. The scientific name is the fallback when iNaturalist
+# uses a different common name (for example "Common Hoopoe").
+SPECIES = {
+    "Indian Peafowl": "Pavo cristatus", "House Crow": "Corvus splendens", "Common Myna": "Acridotheres tristis",
+    "Rose-ringed Parakeet": "Psittacula krameri", "Indian Roller": "Coracias benghalensis",
+    "White-throated Kingfisher": "Halcyon smyrnensis", "Red-vented Bulbul": "Pycnonotus cafer",
+    "Asian Koel": "Eudynamys scolopaceus", "Oriental Magpie-Robin": "Copsychus saularis",
+    "Black Drongo": "Dicrurus macrocercus", "Indian Pond Heron": "Ardeola grayii",
+    "Purple Sunbird": "Cinnyris asiaticus", "Asian Green Bee-eater": "Merops orientalis",
+    "Coppersmith Barbet": "Psilopogon haemacephalus", "Indian Robin": "Copsychus fulicatus",
+    "Jungle Babbler": "Argya striata", "Red-wattled Lapwing": "Vanellus indicus",
+    "Brahminy Kite": "Haliastur indus", "Eurasian Hoopoe": "Upupa epops", "House Sparrow": "Passer domesticus",
+    "Greater Coucal": "Centropus sinensis", "Rufous Treepie": "Dendrocitta vagabunda",
+    "Shikra": "Accipiter badius", "Black Kite": "Milvus migrans", "Laughing Dove": "Spilopelia senegalensis",
+}
 
 
 def get(url, binary=False):
@@ -57,6 +64,20 @@ def plain(name):
     return name.lower().replace("-", " ")
 
 
+def find_taxon(name, scientific):
+    for query in (name, scientific):
+        for taxon in api("taxa", q=query, rank="species", iconic_taxa="Aves")["results"]:
+            if plain(taxon.get("preferred_common_name") or "") == plain(name) or taxon["name"] == scientific:
+                return taxon
+    raise SystemExit(f"Could not find {name} ({scientific}) on iNaturalist")
+
+
+def download(job):
+    url, dest = job
+    if not dest.exists():
+        dest.write_bytes(get(url, binary=True))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--out-dir", default="data/download/india")
@@ -66,10 +87,10 @@ def main():
 
     out_dir = Path(args.out_dir)
     india = next(p for p in api("places/autocomplete", q="India")["results"] if p["name"] == "India" and p["admin_level"] == 0)
-    rows, jobs = [], []
-    for name in SPECIES:
-        taxon = next(t for t in api("taxa", q=name, rank="species", iconic_taxa="Aves")["results"]
-                     if plain(t.get("preferred_common_name") or "") == plain(name))
+    rows, total = [], 0
+    for name, scientific in SPECIES.items():
+        taxon = find_taxon(name, scientific)
+        jobs = []
         folder = name.replace(" ", "_")
         (out_dir / folder).mkdir(parents=True, exist_ok=True)
         per_observer, picked = Counter(), 0
@@ -89,22 +110,17 @@ def main():
                              "attribution": photo["attribution"], "observation": obs["uri"]})
             if picked >= args.per_species or len(found) < 200:
                 break
+        with ThreadPoolExecutor(8) as pool:
+            list(pool.map(download, jobs))
+        total += len(jobs)
         print(f"{name} ({taxon['name']}): {picked} photos from {len(per_observer)} observers", flush=True)
-
-    def download(job):
-        url, dest = job
-        if not dest.exists():
-            dest.write_bytes(get(url, binary=True))
-
-    with ThreadPoolExecutor(8) as pool:
-        list(pool.map(download, jobs))
 
     Path(args.credits).parent.mkdir(parents=True, exist_ok=True)
     with open(args.credits, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
-    print(f"Downloaded {len(jobs)} photos to {out_dir}; credits in {args.credits}")
+    print(f"Downloaded {total} photos to {out_dir}; credits in {args.credits}")
 
 
 if __name__ == "__main__":
