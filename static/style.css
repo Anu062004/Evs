@@ -1,0 +1,133 @@
+/* Placeholder styling. Colours and type are variables so the final design can replace them. */
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --text: #1f2421;
+  --muted: #5f6b63;
+  --border: #dcdfd9;
+  --accent: #2f6b4f;
+  --accent-text: #ffffff;
+  --error: #a33a2a;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a { color: var(--accent); }
+img { max-width: 100%; height: auto; border-radius: var(--radius); }
+code { background: var(--border); padding: 1px 5px; border-radius: 4px; }
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 14px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-weight: 700; color: var(--text); text-decoration: none; }
+.site-nav, .site-footer nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.site-nav a { color: var(--muted); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.site-nav a:hover, .site-nav a.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.page { max-width: 880px; margin: 0 auto; padding: 32px 16px 56px; }
+h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 12px; }
+h2 { font-size: 1.2rem; margin: 28px 0 8px; }
+
+.site-footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.site-footer a { color: var(--muted); }
+
+.button {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { border-color: var(--accent); }
+.button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+.hero { padding: 24px 0 32px; }
+.hero p { max-width: 560px; color: var(--muted); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.card {
+  display: block;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+}
+.card:hover { border-color: var(--accent); }
+.card h2 { margin: 0 0 6px; font-size: 1.05rem; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.notice {
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+}
+.notice.error { border-left-color: var(--error); }
+.hint { color: var(--muted); font-size: 0.9rem; }
+
+.upload {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.upload input[type="file"] { max-width: 100%; font: inherit; }
+
+.result { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 28px; }
+.result h2 { margin-top: 0; }
+.predictions { list-style: none; margin: 0 0 16px; padding: 0; }
+.predictions li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.predictions .confidence { font-variant-numeric: tabular-nums; color: var(--muted); }
+.predictions li:first-child .species { font-weight: 700; }
+.bar { grid-column: 1 / -1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--accent); }
+
+.species-list { columns: 220px; padding-left: 20px; margin-bottom: 24px; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+.stat { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.stat .value { display: block; font-size: 1.7rem; font-weight: 700; }
+.stat .label { color: var(--muted); font-size: 0.9rem; }
+figure { margin: 24px 0; }
+figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }

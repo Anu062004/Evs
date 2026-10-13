@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<h1>About the project</h1>
+<p>Deep Learning-Based Bird Species Recognition, an Environmental Science Project (BAIP508) in the Department of Artificial Intelligence and Machine Learning.</p>
+
+<h2>Team</h2>
+<ul>
+  <li>Sonali N Gowda</li>
+  <li>Anubhav</li>
+  <li>Reyyi Shreyas</li>
+  <li>Mayank Prakash</li>
+</ul>
+<p>Guided by Prof. Shobith Tembhre.</p>
+
+<h2>How it works</h2>
+<p>A ResNet-50 network pretrained on ImageNet is fine-tuned on bird photographs resized to 224 × 224. See <a href="{{ url_for('performance') }}">model performance</a> for the measured results.</p>
+{% endblock %}

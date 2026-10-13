@@ -1,0 +1,17 @@
+{
+  "source": "CUB-200-2011 (Caltech-UCSD Birds)",
+  "licence": "non-commercial research/education use; images copyright their Flickr owners",
+  "seed": 42,
+  "classes": 25,
+  "raw_images": 11788,
+  "kept_images": 1500,
+  "rejected": {
+    "exact_duplicate": 1
+  },
+  "split_counts": {
+    "train": 1050,
+    "val": 225,
+    "test": 225
+  },
+  "leakage_control": "near-duplicate (perceptual hash) groups only; no photographer/session metadata supplied"
+}

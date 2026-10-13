@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Species{% endblock %}
+{% block content %}
+<h1>Species the model knows</h1>
+{% if species %}
+<p>{{ species|length }} species.</p>
+<ul class="species-list">
+  {% for name in species %}<li>{{ name }}</li>{% endfor %}
+</ul>
+<a class="button primary" href="{{ url_for('identify') }}">Identify a bird</a>
+{% else %}
+<p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
+{% endif %}
+{% endblock %}

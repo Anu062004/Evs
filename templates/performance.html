@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Model performance{% endblock %}
+{% block content %}
+<h1>Model performance</h1>
+{% if metrics %}
+<p>ResNet-50 baseline, measured on {{ metrics.test_images }} held-out test images across {{ metrics.classes }} species.</p>
+<div class="stats">
+  <div class="stat"><span class="value">{{ '%.1f'|format(metrics.test_top1 * 100) }}%</span><span class="label">Top-1 accuracy</span></div>
+  <div class="stat"><span class="value">{{ '%.1f'|format(metrics.test_top5 * 100) }}%</span><span class="label">Top-5 accuracy</span></div>
+  <div class="stat"><span class="value">{{ '%.3f'|format(metrics.test_macro_f1) }}</span><span class="label">Macro-F1</span></div>
+</div>
+{% for plot in plots %}
+<figure>
+  <img src="{{ url_for('run_file', name=plot) }}" alt="{{ plot }}">
+  <figcaption>{{ 'Training curves' if plot == 'curves.png' else 'Confusion matrix (test split)' }}</figcaption>
+</figure>
+{% endfor %}
+{% else %}
+<p class="notice">No evaluation results yet. They appear here once <code>train.py</code> has finished.</p>
+{% endif %}
+{% endblock %}

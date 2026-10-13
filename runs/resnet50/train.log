@@ -1,0 +1,19 @@
+args: {'manifest': 'data/manifest/manifest.csv', 'data_dir': 'data/download/CUB_200_2011/images', 'out_dir': 'runs/resnet50', 'epochs': 15, 'freeze_epochs': 2, 'batch_size': 32, 'lr': 0.001, 'workers': 2, 'limit_per_class': None, 'no_pretrained': False, 'seed': 42}
+device: mps | classes: 25 | train: 1050 | val: 225 | test: 225
+epoch 01/15 | train loss 2.8595 f1 0.3261 | val loss 2.4397 top1 0.6578 f1 0.6544 | 21s
+epoch 02/15 | train loss 2.1151 f1 0.7195 | val loss 2.0064 top1 0.7156 f1 0.7104 | 12s
+epoch 03/15 | train loss 1.2575 f1 0.8331 | val loss 1.0989 top1 0.8444 f1 0.8381 | 32s
+epoch 04/15 | train loss 0.8720 f1 0.9556 | val loss 1.0371 top1 0.8622 f1 0.8588 | 29s
+epoch 05/15 | train loss 0.7677 f1 0.9818 | val loss 1.0103 top1 0.8800 f1 0.8844 | 29s
+epoch 06/15 | train loss 0.7254 f1 0.9923 | val loss 0.9859 top1 0.8711 f1 0.8677 | 43s
+epoch 07/15 | train loss 0.6985 f1 0.9934 | val loss 0.9806 top1 0.8711 f1 0.8701 | 52s
+epoch 08/15 | train loss 0.6875 f1 0.9990 | val loss 0.9897 top1 0.8800 f1 0.8751 | 52s
+epoch 09/15 | train loss 0.6777 f1 1.0000 | val loss 0.9789 top1 0.8756 f1 0.8730 | 40s
+epoch 10/15 | train loss 0.6693 f1 1.0000 | val loss 0.9749 top1 0.8800 f1 0.8783 | 37s
+epoch 11/15 | train loss 0.6652 f1 0.9990 | val loss 0.9801 top1 0.8711 f1 0.8678 | 42s
+epoch 12/15 | train loss 0.6649 f1 1.0000 | val loss 0.9762 top1 0.8711 f1 0.8691 | 45s
+epoch 13/15 | train loss 0.6642 f1 0.9990 | val loss 0.9732 top1 0.8844 f1 0.8810 | 53s
+epoch 14/15 | train loss 0.6614 f1 1.0000 | val loss 0.9729 top1 0.8711 f1 0.8693 | 49s
+epoch 15/15 | train loss 0.6596 f1 1.0000 | val loss 0.9718 top1 0.8756 f1 0.8731 | 38s
+test: {"best_epoch": 5, "val_macro_f1": 0.8844326011106197, "test_loss": 1.0240131521224975, "test_top1": 0.8755555555555555, "test_top5": 0.9866666793823242, "test_macro_f1": 0.8777056857830852, "test_images": 225, "classes": 25}
+Saved weights, curves, metrics and predictions to runs/resnet50

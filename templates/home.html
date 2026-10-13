@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Identify a bird from a photo</h1>
+  <p>Upload a field photograph and get the three most likely species with a confidence score for each.</p>
+  <div class="actions">
+    <a class="button primary" href="{{ url_for('identify') }}">Identify a bird</a>
+    <a class="button" href="{{ url_for('species') }}">Browse species</a>
+  </div>
+  {% if not model_ready %}
+  <p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
+  {% endif %}
+</section>
+
+<section class="cards">
+  {% for endpoint, label, status in sitemap if endpoint != 'home' %}
+  <a class="card" href="{{ url_for(endpoint) }}">
+    <h2>{{ label }}</h2>
+    {% if status == 'planned' %}<span class="badge">Planned</span>{% endif %}
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}

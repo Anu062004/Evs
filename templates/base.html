@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} · Bird Species Recognition</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('home') }}">Bird Species Recognition</a>
+    <nav class="site-nav">
+      {% for endpoint, label, status in sitemap %}
+      <a href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} class="active"{% endif %}>{{ label }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <nav>
+      {% for endpoint, label, status in sitemap %}
+      <a href="{{ url_for(endpoint) }}">{{ label }}</a>
+      {% endfor %}
+    </nav>
+    <p>Environmental Science Project (BAIP508) · Department of AI&amp;ML</p>
+  </footer>
+</body>
+</html>

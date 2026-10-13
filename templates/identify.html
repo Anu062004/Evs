@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Identify{% endblock %}
+{% block content %}
+<h1>Identify a bird</h1>
+
+{% if not model_ready %}
+<p class="notice">The model file is missing. Run <code>train.py</code> and then <code>export_onnx.py</code>.</p>
+{% else %}
+<form class="upload" method="post" enctype="multipart/form-data">
+  <label for="photo">Bird photo (JPG or PNG, up to 10 MB)</label>
+  <input id="photo" type="file" name="photo" accept="image/*" required>
+  <button class="button primary" type="submit">Identify</button>
+</form>
+{% endif %}
+
+{% if error %}<p class="notice error">{{ error }}</p>{% endif %}
+
+{% if predictions %}
+<section class="result">
+  <img src="data:image/jpeg;base64,{{ preview }}" alt="Uploaded photo: {{ filename }}">
+  <div>
+    <h2>Top {{ predictions|length }} species</h2>
+    <ol class="predictions">
+      {% for p in predictions %}
+      <li>
+        <span class="species">{{ p.species }}</span>
+        <span class="confidence">{{ '%.1f'|format(p.confidence * 100) }}%</span>
+        <span class="bar"><span style="width: {{ '%.1f'|format(p.confidence * 100) }}%"></span></span>
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="hint">The model only knows the species on the <a href="{{ url_for('species') }}">species list</a>, so any other bird is still given one of those names.</p>
+    <a class="button" href="{{ url_for('identify') }}">Try another photo</a>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

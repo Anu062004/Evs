@@ -1,0 +1,19 @@
+# Environments and caches
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Secrets and local config
+.env
+.env.*
+.vercel
+
+# Downloaded datasets (large, and not ours to redistribute)
+data/download/
+data/raw/
+
+# PyTorch checkpoints (the web app uses model/bird_resnet50.onnx)
+*.pt
+*.pth
+runs/smoke/
