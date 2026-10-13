@@ -1,0 +1,18 @@
+# Only the website and its model are deployed.
+.venv
+.git
+__pycache__
+data
+*.pt
+*.pth
+.env*
+common.py
+train.py
+predict.py
+prepare_data.py
+export_onnx.py
+requirements-train.txt
+runs/resnet50/train.log
+runs/resnet50/history.csv
+runs/resnet50/test_predictions.csv
+runs/resnet50/confusion_matrix.csv
