@@ -8,6 +8,7 @@
   <script>document.documentElement.classList.add('js')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&amp;family=DM+Sans:opsz,wght@9..40,400..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/logo.svg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -16,7 +17,7 @@
 
   <header class="fp-nav">
     <a class="fp-brand" href="{{ url_for('home') }}">
-      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="#1f5c37"></circle><path d="M9 21c0-7 4.5-12 12-12 0 7.5-5 12-12 12Z" fill="none" stroke="#f6f5ee" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 21 16.5 13.5" stroke="#f6f5ee" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      <img src="{{ url_for('static', filename='img/logo.svg') }}" width="34" height="34" alt="">
       <span>Bird Recognition</span>
     </a>
     <nav class="fp-links" aria-label="Primary">
@@ -48,12 +49,38 @@
   </main>
 
   <footer class="fp-foot">
-    <nav aria-label="Footer">
-      {% for endpoint, label, status in sitemap %}
-      <a class="fp-ghost" href="{{ url_for(endpoint) }}"><span>{{ label }}</span></a>
-      {% endfor %}
-    </nav>
-    <p class="fp-caption">Environmental Science Project (BAIP508) · Department of AI&amp;ML · <a href="{{ url_for('about') }}#credits">Photo credits</a></p>
+    <div class="fp-foot-grid">
+      <div class="fp-foot-brand">
+        <a class="fp-brand" href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" width="40" height="40" alt="">
+          <span>Bird Recognition</span>
+        </a>
+        <p class="fp-caption">Identify a bird species from one photograph, using a ResNet-50 network fine-tuned on bird images.</p>
+        <a class="btn btn-primary btn-sm" href="{{ url_for('identify') }}">Identify a bird {{ arrow() }}</a>
+      </div>
+      <nav aria-label="Site">
+        <p class="fp-label">Site</p>
+        <a class="fp-ghost" href="{{ url_for('home') }}"><span>Home</span></a>
+        <a class="fp-ghost" href="{{ url_for('identify') }}"><span>Identify</span></a>
+        <a class="fp-ghost" href="{{ url_for('species') }}"><span>Species</span></a>
+        <a class="fp-ghost" href="{{ url_for('biodiversity') }}"><span>Biodiversity</span></a>
+      </nav>
+      <nav aria-label="Project">
+        <p class="fp-label">Project</p>
+        <a class="fp-ghost" href="{{ url_for('performance') }}"><span>Model performance</span></a>
+        <a class="fp-ghost" href="{{ url_for('docs') }}"><span>Documentation</span></a>
+        <a class="fp-ghost" href="{{ url_for('about') }}"><span>About the team</span></a>
+        <a class="fp-ghost" href="https://github.com/Anu062004/Evs"><span>Source on GitHub</span></a>
+      </nav>
+      <div>
+        <p class="fp-label">Course</p>
+        <p class="fp-caption">Environmental Science Project (BAIP508)<br>Department of Artificial Intelligence and Machine Learning<br>Guide: Prof. Shobith Tembhre</p>
+      </div>
+    </div>
+    <div class="fp-foot-base">
+      <p class="fp-caption">Results are a Phase 1 baseline. Predictions are not verified identifications.</p>
+      <p class="fp-caption">Photographs from Wikimedia Commons under Creative Commons licences · <a href="{{ url_for('about') }}#credits">Photo credits</a></p>
+    </div>
   </footer>
   <script src="{{ url_for('static', filename='site.js') }}"></script>
 </body>
